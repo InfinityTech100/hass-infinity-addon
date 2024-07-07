@@ -1,8 +1,15 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-const { setCfg, getCfg, getDevices, removeDeviceByCid, addDevice } = require("./utils");
-const bodyParser = require('body-parser');
+const {
+  setCfg,
+  getCfg,
+  getDevices,
+  removeDeviceByCid,
+  addDevice,
+  discover,
+} = require("./utils");
+const bodyParser = require("body-parser");
 
 const app = express();
 
@@ -12,8 +19,8 @@ app.use(bodyParser.json());
 // Logging middleware to check headers and body
 app.use((req, res, next) => {
   console.log(`Received ${req.method} request to ${req.url}`);
-  console.log('Headers:', req.headers);
-  console.log('Body:', req.body);
+  console.log("Headers:", req.headers);
+  console.log("Body:", req.body);
   next();
 });
 
@@ -31,11 +38,9 @@ app.get("/", (req, res) => {
   res.render("index", { title: "infinity cloud bridge" });
 });
 
-
-
 // Setting configuration route
 app.post("/config", (req, res) => {
-  console.log('Request body in POST /config:', req.body);
+  console.log("Request body in POST /config:", req.body);
   setCfg(req.body.token, req.body.broker, req.body.getway);
   res.send({ msg: "OK" });
 });
@@ -45,23 +50,32 @@ app.get("/config", (req, res) => {
   res.send(getCfg());
 });
 
-app.get("/devices",(req, res) => {
+app.get("/devices", (req, res) => {
   res.send(getDevices());
 });
 
-app.delete("/devices/:cid",(req, res) => {
-  const cid=req.params.cid;
+app.delete("/devices/:cid", (req, res) => {
+  const cid = req.params.cid;
   console.log(cid);
   removeDeviceByCid(cid);
-  res.send({msg:"ok"});
+  res.send({ msg: "ok" });
 });
 
-app.post("/devices/",(req, res) => {
-
+app.post("/devices", (req, res) => {
   addDevice(req.body);
-  res.send({msg:"ok"});
+  res.send({ msg: "ok" });
 });
 
+app.get("/discover", async (req, res) => {
+  try {
+    const x = await discover();
+    console.log("discovered:", x);
+    res.send(x);
+  } catch (error) {
+    console.error("Error in /discover route:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 // Start the server
 const PORT = process.env.PORT || 3000;

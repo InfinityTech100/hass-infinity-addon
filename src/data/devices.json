@@ -1,10 +1,11 @@
 [
   {
-    "cid": "454511251asgdffsg",
-    "name": "temp sensor 10",
+    "cid": "abcdef",
+    "name": "temp sensor 12",
     "source": "Home-Hub",
+    "type": "device-type",
     "state": "online",
-    "last-seen": "12 mar 2024 ",
+    "lastSeen": "12 mar 2024 ",
     "properties": [
       {
         "ha": "calue of ha",

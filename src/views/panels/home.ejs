@@ -43,7 +43,7 @@
         </svg>
       </div>
       <div class="stat-title">Devices</div>
-      <div class="stat-value" id="devices">5</div>
+      <div class="stat-value" id="devices"></div>
       <div class="stat-desc"></div>
     </div>
   </div>
@@ -121,14 +121,16 @@
       const tableBody = document.getElementById("device-table-body");
       tableBody.innerHTML = "";
 
+      let i = 0;
       devices.forEach((device) => {
+        i++;
         const row = document.createElement("tr");
 
         row.innerHTML = `
           <td>${device.name}</td>
           <td>${device.cid}</td>
           <td><span class="badge badge-outline">${device.state}</span></td>
-          <td>${device["last-seen"]}</td>
+          <td>${device.lastSeen}</td>
           <td>
             <button class="btn btn-outline" onclick="remDevice('${device.cid}')">
               <i class="material-icons">delete</i>
@@ -138,6 +140,9 @@
 
         tableBody.appendChild(row);
       });
+      console.log(i);
+     let x= document.getElementById("devices");
+     x.innerText = i;
     } catch (error) {
       console.error("Error fetching devices:", error);
     }

@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const axios = require("axios");
 
 // Function to set the configuration
 function setCfg(token, broker, gateway) {
@@ -54,6 +55,26 @@ function addDevice(device) {
   fs.writeFileSync(configFilePath, JSON.stringify(deviceList, null, 2), "utf8");
   console.log("Devices added successfully.", deviceList);
 }
+async function discover() {
+  try {
+    const token = getCfg().token; // Assuming getCfg() retrieves the token
+    console.log(`token ${token}`);
+    
+    const url = "http://127.0.0.1:8123/api/states";
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    
+    console.log("Response:", response.data);
+    return response.data; // Return the response data
+  } catch (error) {
+    console.error("Error:", error);
+    return {}; // Return an empty object or handle the error accordingly
+  }
+}
 
 module.exports = {
   setCfg,
@@ -61,4 +82,5 @@ module.exports = {
   getDevices,
   removeDeviceByCid,
   addDevice,
+  discover,
 };
