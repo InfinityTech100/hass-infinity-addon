@@ -1,3 +1,9 @@
+/**
+ * @author: Nader Hany info@infinitytech.ltd
+ * @info: this application is a beautiful home assistant integration for
+ *        publishing the home assistant devices states to thingsboard dashboard on the cloud
+ */
+
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
@@ -8,6 +14,7 @@ const {
   removeDeviceByCid,
   addDevice,
   discover,
+  getState,
 } = require("./utils");
 const bodyParser = require("body-parser");
 
@@ -69,6 +76,17 @@ app.post("/devices", (req, res) => {
 app.get("/discover", async (req, res) => {
   try {
     const x = await discover();
+    console.log("discovered:", x);
+    res.send(x);
+  } catch (error) {
+    console.error("Error in /discover route:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/device/:id", async (req, res) => {
+  try {
+    const x = await getState(req.params.id);
     console.log("discovered:", x);
     res.send(x);
   } catch (error) {
