@@ -1,0 +1,90 @@
+<div id="setting-panel" class="hidden">
+  <div class="container mx-auto p-4 flex flex-col space-y-4">
+    <h1 class="text-4xl flex items-center space-x-1">
+      <i class="material-icons">settings</i>
+      <span>Setting</span>
+    </h1>
+
+    <label class="my-2">Cloud Dashboard Gateway</label>
+    <input
+      type="text"
+      id="getway"
+      placeholder="Enter your Cloud Gateway here"
+      class="input input-bordered w-full mt-1"
+    />
+
+    <label class="my-2">Mqtt Broker Address</label>
+    <input
+      type="text"
+      id="broker"
+      placeholder="Enter your mqtt broker address"
+      class="input input-bordered w-full mt-1"
+    />
+
+    <label class="my-2">Home Hub Access Token</label>
+    <input
+      type="text"
+      id="token"
+      placeholder="Enter your long live access token here"
+      class="input input-bordered w-full mt-1"
+    />
+
+    <button id="saveButton" class="btn btn-primary mt-4 self-end">Save</button>
+  </div>
+</div>
+
+<script>
+  getway = document.getElementById("getway");
+  broker = document.getElementById("broker");
+  token = document.getElementById("token");
+
+  async function fetchConfig() {
+      try {
+        const response = await fetch('/config');
+        const config = await response.json();
+        console.log(config);
+
+        getway.value = config.getway || '';
+        broker.value = config.broker || '';
+        token.value = config.token || '';
+      } catch (error) {
+        console.error('Failed to fetch config:', error);
+      }
+    }
+
+    saveButton.addEventListener('click', () => {
+      const newConfig = {
+        token: token.value,
+        broker: broker.value,
+        getway: getway.value
+      };
+
+      setCfg(newConfig.token, newConfig.broker, newConfig.getway);
+    });
+
+    function setCfg(token, broker, gateway) {
+      const config = {
+        "token": token,
+        "broker": broker,
+        "getway": gateway
+      };
+
+      fetch('/config', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(config)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Configuration updated successfully:', data);
+      })
+      .catch(error => {
+        console.error('Failed to update config:', error);
+      });
+    }
+
+    // Fetch the config on page load
+    fetchConfig();
+</script>
