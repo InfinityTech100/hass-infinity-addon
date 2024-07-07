@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-const { setCfg, getCfg } = require("./utils");
+const { setCfg, getCfg, getDevices, removeDeviceByCid, addDevice } = require("./utils");
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -32,6 +32,7 @@ app.get("/", (req, res) => {
 });
 
 
+
 // Setting configuration route
 app.post("/config", (req, res) => {
   console.log('Request body in POST /config:', req.body);
@@ -42,6 +43,23 @@ app.post("/config", (req, res) => {
 // Getting configuration route
 app.get("/config", (req, res) => {
   res.send(getCfg());
+});
+
+app.get("/devices",(req, res) => {
+  res.send(getDevices());
+});
+
+app.delete("/devices/:cid",(req, res) => {
+  const cid=req.params.cid;
+  console.log(cid);
+  removeDeviceByCid(cid);
+  res.send({msg:"ok"});
+});
+
+app.post("/devices/",(req, res) => {
+
+  addDevice(req.body);
+  res.send({msg:"ok"});
 });
 
 

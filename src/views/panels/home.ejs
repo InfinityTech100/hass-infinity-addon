@@ -1,70 +1,69 @@
 <div id="home-panel" class="">
-
-<div class="container mx-auto p-4 ">
-  <h1 class="text-4xl">Welcome to the <%= title %></h1>
-</div>
-<!-- stat data -->
-<div class="p-9 stats shadow flex items-center justify-center">
-
-  <div class="stat">
-    <div class="stat-figure text-secondary">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        class="inline-block h-8 w-8 stroke-current"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-        ></path>
-      </svg>
+  <div class="container mx-auto p-4">
+    <h1 class="text-4xl">Welcome to the <%= title %></h1>
+  </div>
+  <!-- stat data -->
+  <div class="p-9 stats shadow flex items-center justify-center">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Users</div>
+      <div class="stat-value">1</div>
+      <div class="stat-desc"></div>
     </div>
-    <div class="stat-title">Users</div>
-    <div class="stat-value">1</div>
-    <div class="stat-desc"></div>
+
+    <!-- devices -->
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Devices</div>
+      <div class="stat-value" id="devices">5</div>
+      <div class="stat-desc"></div>
+    </div>
   </div>
 
-  <!-- devices -->
-  <div class="stat">
-    <div class="stat-figure text-secondary">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        class="inline-block h-8 w-8 stroke-current"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
-        ></path>
-      </svg>
-    </div>
-    <div class="stat-title">Devices</div>
-    <div class="stat-value" id="devices">5</div>
-    <div class="stat-desc"></div>
-  </div>
-</div>
+  <!-- table -->
+  <div class="container mx-auto p-4">
+    <div class="overflow-x-auto">
+      <table class="table w-full">
+        <thead>
+          <tr>
+            <th>Device Name</th>
+            <th>Device Cloud ID</th>
+            <th>Status</th>
+            <th>Last Seen</th>
+            <th>Action</th>
+          </tr>
+        </thead>
 
-<!-- table -->
-<div class="container mx-auto p-4">
-  <div class="overflow-x-auto">
-    <table class="table w-full">
-      <thead>
-        <tr>
-          <th>Device Name</th>
-          <th>Device Cloud ID</th>
-          <th>Status</th>
-          <th>Last Seen</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
+        <tbody id="device-table-body">
+          <!-- <tr>
           <td>Device 1</td>
           <td>ABC123</td>
           <td><span class="badge badge-outline">Online</span></td>
@@ -74,38 +73,76 @@
                 <i class="material-icons">delete</i>
             </button>
           </td>
-        </tr>
-        <tr>
-          <td>Device 2</td>
-          <td>XYZ789</td>
-          <td><span class="badge badge-outline">Offline</span></td>
-          <td>2024-07-04 08:30 PM</td>
-          <td>
-            <button class="btn  btn-outline " onclick="openDevice('Device 2')">
-                <i class="material-icons">delete</i>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>Device 3</td>
-          <td>DEF456</td>
-          <td><span class="badge badge-outline">Maintenance</span></td>
-          <td>2024-07-05 08:00 AM</td>
-          <td>
-            <button class="btn  btn-outline " onclick="openDevice('Device 3')">
-                <i class="material-icons">delete</i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        </tr> -->
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
-</div>
 
-<!-- script for open device details -->
+<!-- script for delete device details -->
 <script>
-  function openDevice(deviceName) {
+  function remDevice(deviceName) {
     console.log(deviceName);
+    deleteDevice(deviceName);
   }
+
+  async function deleteDevice(cidToDelete) {
+    try {
+      const response = await fetch(`/devices/${cidToDelete}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          // Add any additional headers if needed
+        },
+        // You can pass data here if required (e.g., JSON.stringify({ token: 'sample' }))
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Device deleted successfully:", data.msg); // Assuming your server responds with a message
+      // Refresh the page
+      location.reload();
+    } catch (error) {
+      console.error("Error deleting device:", error);
+    }
+  }
+</script>
+
+<script>
+  async function fetchDevices() {
+    try {
+      const response = await fetch("/devices");
+      const devices = await response.json();
+
+      const tableBody = document.getElementById("device-table-body");
+      tableBody.innerHTML = "";
+
+      devices.forEach((device) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${device.name}</td>
+          <td>${device.cid}</td>
+          <td><span class="badge badge-outline">${device.state}</span></td>
+          <td>${device["last-seen"]}</td>
+          <td>
+            <button class="btn btn-outline" onclick="remDevice('${device.cid}')">
+              <i class="material-icons">delete</i>
+            </button>
+          </td>
+        `;
+
+        tableBody.appendChild(row);
+      });
+    } catch (error) {
+      console.error("Error fetching devices:", error);
+    }
+  }
+
+  // Fetch devices when the page loads
+  window.onload = fetchDevices;
 </script>

@@ -1,7 +1,9 @@
-[
-  {
-    "cid": "454511251asgdffsg",
-    "name": "temp sensor 10",
+POST  http://localhost:3000/devices/ HTTP/1.1
+content-type: application/json
+
+{
+    "cid": "abcdef",
+    "name": "temp sensor 12",
     "source": "Home-Hub",
     "state": "online",
     "last-seen": "12 mar 2024 ",
@@ -12,4 +14,3 @@
       }
     ]
   }
-]
