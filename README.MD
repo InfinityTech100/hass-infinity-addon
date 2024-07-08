@@ -9,7 +9,7 @@ this is an add on designed for home assistant to bridge its devices to a things 
 
 ## testing and validation
 <video width="640" height="360" controls>
-  <source src="https://github.com/InfinityTech100/hass-infinity-addon/blob/main/screenshots/videos/infinityhassaddon-2024-07-08_04.03.10.mp4" type="video/mp4">
+  <source src="screenshots/videos/vid1.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
@@ -40,7 +40,7 @@ you need to generate access token from the home assistant user -> security -> lo
 , you can follow the video like that :-
 
 <video width="640" height="360" controls>
-  <source src="https://github.com/InfinityTech100/hass-infinity-addon/blob/main/screenshots/videos/infinityhassaddonsetting-2024-07-08_04.06.45.mp4" type="video/mp4">
+  <source src="screenshots/videos/vid2.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
