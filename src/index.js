@@ -15,8 +15,13 @@ const {
   addDevice,
   discover,
   getState,
+  transformDevice,
+  generateDeviceUrl,
+  send2cloud,
+  updateLastSeen
 } = require("./utils");
 const bodyParser = require("body-parser");
+const { log } = require("console");
 
 const app = express();
 
@@ -57,10 +62,12 @@ app.get("/config", (req, res) => {
   res.send(getCfg());
 });
 
+// get the whole devices inistances
 app.get("/devices", (req, res) => {
   res.send(getDevices());
 });
 
+// delete device by id
 app.delete("/devices/:cid", (req, res) => {
   const cid = req.params.cid;
   console.log(cid);
@@ -68,11 +75,13 @@ app.delete("/devices/:cid", (req, res) => {
   res.send({ msg: "ok" });
 });
 
+// add new device
 app.post("/devices", (req, res) => {
   addDevice(req.body);
   res.send({ msg: "ok" });
 });
 
+// will discover the devices in home assistant api
 app.get("/discover", async (req, res) => {
   try {
     const x = await discover();
@@ -84,6 +93,7 @@ app.get("/discover", async (req, res) => {
   }
 });
 
+// will get a device state from home assistant api
 app.get("/device/:id", async (req, res) => {
   try {
     const x = await getState(req.params.id);
@@ -100,3 +110,35 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+/**
+ * in this thread we will get all registered devices status
+ * and then send it to the thingsboard cloud .
+ *
+ * 1- need to get all devices registered
+ * 2- foreach device:-
+ *    0- update device last seen
+ *    1- transform the device telementary
+ *    2- generate its url
+ *    3- send to the cloud
+ */
+ function thread() {
+  try {
+    console.log("updating devices on the cloud ....");
+
+    let xa = getDevices();
+    xa.forEach(async(device) => {
+      updateLastSeen(device);
+      var data=await transformDevice(device);
+      var devUrl= generateDeviceUrl(device.cid);
+      await send2cloud(devUrl,data)
+      // console.log(a);
+    });
+    console.log("success");
+  } catch (error) {
+    console.log("invlid cloud id.....");
+  }
+}
+
+// Set interval to run logHelloWorld function every 1000 ms (1 second)
+setInterval(thread, 1000);

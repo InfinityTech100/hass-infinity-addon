@@ -1,5 +1,5 @@
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI4YzQxZjdjZGYyNjg0ZDFkYTFlNGM4MTRmODRiNDM4OSIsImlhdCI6MTcyMDM4MDk1MCwiZXhwIjoyMDM1NzQwOTUwfQ.YEBFt6rG7jOVfkN8bTBGaymvhmtlzEQekjbTU9Q6SOc",
   "broker": "localhost:1883",
-  "getway": "http://thingsboard.cloud/api/v1/device_id/telemetry"
+  "getway": "https://thingsboard.cloud/api/v1/<device_id>/telemetry"
 }

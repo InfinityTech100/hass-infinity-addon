@@ -49,6 +49,9 @@
 
       function navigate(panel) {
         switch (panel) {
+          case "/":
+              location.reload();
+            break;
           case "home":
           hidePanel(home, true);
             hidePanel(newDevicePanel, false);

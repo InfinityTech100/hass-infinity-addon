@@ -5,16 +5,21 @@
     </a>
   </div>
 
-
   <!-- <div class="flex-none lg:hidden">
     <button class="btn btn-ghost lg:hidden" id="mobile-menu-button">
       <i class="material-icons">menu</i>
     </button>
   </div> -->
 
-
   <div class="hidden lg:flex lg:flex-none">
     <ul class="menu menu-horizontal px-1">
+      <!-- refresh -->
+      <li>
+        <button class="btn btn-ghost" onclick="navigate('/')">
+          <i class="material-icons">restart_alt</i>
+        </button>
+      </li>
+
       <!-- devices -->
       <li>
         <button class="btn btn-ghost" onclick="navigate('home')">
@@ -69,12 +74,20 @@
   </div>
 
   <!-- Mobile menu -->
-  <div class="lg:hidden  " >
+  <div class="lg:hidden">
     <ul class="menu menu-vertical px-1">
+      
+      <!-- refresh -->
+      <li>
+        <button class="btn btn-ghost" onclick="navigate('/')">
+          <i class="material-icons">restart_alt</i>
+        </button>
+      </li>
+
       <!-- devices -->
       <li>
         <button class="btn btn-ghost" onclick="navigate('home')">
-          <i class="material-icons" >sensors</i> 
+          <i class="material-icons">sensors</i>
         </button>
       </li>
 
@@ -91,14 +104,8 @@
           <i class="material-icons">add</i>
         </button>
       </li>
-     
     </ul>
-
   </div>
-
-
-
-
 </div>
 
 <script>
@@ -123,5 +130,3 @@
       console.log(this.checked);
     });
 </script>
-
-

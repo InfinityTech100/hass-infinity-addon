@@ -1,15 +1,14 @@
 [
   {
-    "cid": "abcdef",
-    "name": "temp sensor 12",
+    "name": "my test device",
+    "type": "zone1.sss",
+    "cid": "vgatwamjo127vmncl0tl9kes",
     "source": "Home-Hub",
-    "type": "device-type",
     "state": "online",
-    "lastSeen": "12 mar 2024 ",
     "properties": [
       {
-        "ha": "calue of ha",
-        "cloud": "value"
+        "hass": "sun.sun",
+        "cloud": "sun"
       }
     ]
   }
