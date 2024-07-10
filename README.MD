@@ -1,59 +1,23 @@
-# infinity Home Assistant Cloude Bridge add-ons
-
-this is an add on designed for home assistant to bridge its devices to a things board custom dashboard.
-
-<img src="screenshots/Screenshot from 2024-07-08 04-00-55.png" >
-<img src="screenshots/Screenshot from 2024-07-08 04-01-08.png" >
-<img src="screenshots/Screenshot from 2024-07-08 04-01-18.png" >
-<img src="screenshots/Screenshot from 2024-07-08 04-01-25.png" >
-
-## testing and validation
-<video width="640" height="360" controls>
-  <source src="screenshots/videos/vid1.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
-
-## installation on home assitant 
-
-you just need to install and rub it using the install script
-
+# UXE-MQTT-Publish
+In HUB problem  js version is old change -> v20.15.0
+npm version -> 10.7.0
 ```bash
-./install.sh
-```
-
-after that you need to add it to the configuration.yaml file for home assistant
-
-
-```yaml
-panel_iframe:
-  home_cloud:
-    title: "infinity cloud"
-    url: "http://127.0.0.1:3000"
-    icon: mdi:internet
-    require_admin: true
-```
-
-## Setting up the integration 
-
-you need to generate access token from the home assistant user -> security -> longlive access token and then paste it to our setting integration page
-, you can follow the video like that :-
-
-<video width="640" height="360" controls>
-  <source src="screenshots/videos/vid2.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+ # Remove old version 
+ sudo apt-get remove nodejs 
+ # Using nvm (Node Version Manager)
+ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+ source ~/.bashrc
+ nvm install 20.15.0
+ nvm use 20.15.0
+ # Verify the installation
+ node -v
+ npm -v
+ # Install MQTT & axios
+ npm list mqtt axios
+ #Run the App
+ node app.js
+ 
 
 
-
-## results 
-
-a beautiful home assistant integration and easy to maintain
-
-
-## Todo
-
-1- make it based on a docker container.<br>
-2- fix the last seen bug.<br>
-3- add dialog that indicate a device added succesfully.<br>
-4- ??
+ 
+ 
