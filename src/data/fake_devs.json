@@ -1,0 +1,20 @@
+{
+  "blocked": [
+    "person.uxe",
+    "zone.home",
+    "conversation.home_assistant",
+    "sun.sun",
+    "sensor.sun_next_dawn",
+    "sensor.sun_next_dusk",
+    "sensor.sun_next_midnight",
+    "sensor.sun_next_noon",
+    "sensor.sun_next_rising",
+    "sensor.sun_next_setting",
+    "todo.shopping_list",
+    "update.hacs_update",
+    "update.node_red_companion_update",
+    "tts.google_en_com",
+    "automation.num1",
+    "weather.forecast_home"
+  ] 
+}

@@ -9,12 +9,13 @@ const fs = require("fs");
 const axios = require("axios");
 
 // Function to set the configuration
-function setCfg(token, broker, gateway) {
+function setCfg(token, broker, ebroker,gateway) {
   try {
     const configFilePath = path.join(__dirname, "data", "config.json");
     const config = {
       token: token,
       broker: broker,
+      external_broker: ebroker,
       getway: gateway,
     };
 

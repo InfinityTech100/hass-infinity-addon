@@ -18,8 +18,9 @@ const {
   transformDevice,
   generateDeviceUrl,
   send2cloud,
-  updateLastSeen
+  updateLastSeen,
 } = require("./utils");
+const parseDevices = require("./deviceProcessor");
 const bodyParser = require("body-parser");
 const { log } = require("console");
 
@@ -53,7 +54,12 @@ app.get("/", (req, res) => {
 // Setting configuration route
 app.post("/config", (req, res) => {
   console.log("Request body in POST /config:", req.body);
-  setCfg(req.body.token, req.body.broker, req.body.getway);
+  setCfg(
+    req.body.token,
+    req.body.broker,
+    req.body.external_broker,
+    req.body.getway
+  );
   res.send({ msg: "OK" });
 });
 
@@ -93,6 +99,18 @@ app.get("/discover", async (req, res) => {
   }
 });
 
+// will discover the devices in home assistant api
+app.get("/discover/2", async (req, res) => {
+  try {
+    const x = await discover();
+    console.log("discovered:", x);
+    const a = parseDevices(x);
+    res.send(a);
+  } catch (error) {
+    console.error("Error in /discover route:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
 // will get a device state from home assistant api
 app.get("/device/:id", async (req, res) => {
   try {
@@ -122,16 +140,16 @@ app.listen(PORT, () => {
  *    2- generate its url
  *    3- send to the cloud
  */
- function thread() {
+function thread() {
   try {
     console.log("updating devices on the cloud ....");
 
     let xa = getDevices();
-    xa.forEach(async(device) => {
+    xa.forEach(async (device) => {
       updateLastSeen(device);
-      var data=await transformDevice(device);
-      var devUrl= generateDeviceUrl(device.cid);
-      await send2cloud(devUrl,data)
+      var data = await transformDevice(device);
+      var devUrl = generateDeviceUrl(device.cid);
+      await send2cloud(devUrl, data);
       // console.log(a);
     });
     console.log("success");
@@ -141,4 +159,4 @@ app.listen(PORT, () => {
 }
 
 // Set interval to run logHelloWorld function every 1000 ms (1 second)
-setInterval(thread, 1000);
+// setInterval(thread, 1000);

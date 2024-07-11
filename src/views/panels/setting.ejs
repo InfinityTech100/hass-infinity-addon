@@ -13,11 +13,19 @@
       class="input input-bordered w-full mt-1"
     />
 
-    <label class="my-2">Mqtt Broker Address</label>
+    <label class="my-2">Z2M Mqtt Broker Address</label>
     <input
       type="text"
       id="broker"
       placeholder="Enter your mqtt broker address"
+      class="input input-bordered w-full mt-1"
+    />
+
+    <label class="my-2">external Mqtt Broker Address</label>
+    <input
+      type="text"
+      id="external-broker"
+      placeholder="Enter your external mqtt broker address"
       class="input input-bordered w-full mt-1"
     />
 
@@ -36,6 +44,7 @@
 <script>
   getway = document.getElementById("getway");
   broker = document.getElementById("broker");
+  ebroker = document.getElementById("external-broker");
   token = document.getElementById("token");
 
   async function fetchConfig() {
@@ -46,6 +55,7 @@
 
         getway.value = config.getway || '';
         broker.value = config.broker || '';
+        ebroker.value= config.external_broker || '';
         token.value = config.token || '';
       } catch (error) {
         console.error('Failed to fetch config:', error);
@@ -56,16 +66,18 @@
       const newConfig = {
         token: token.value,
         broker: broker.value,
+        external_broker:ebroker.value,
         getway: getway.value
       };
 
-      setCfg(newConfig.token, newConfig.broker, newConfig.getway);
+      setCfg(newConfig.token, newConfig.broker, newConfig.external_broker,newConfig.getway);
     });
 
-    function setCfg(token, broker, gateway) {
+    function setCfg(token, broker,ebroker ,gateway) {
       const config = {
         "token": token,
         "broker": broker,
+        "external_broker": ebroker,
         "getway": gateway
       };
 
