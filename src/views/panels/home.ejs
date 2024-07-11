@@ -79,6 +79,8 @@
       </table>
     </div>
   </div>
+
+
 </div>
 
 <!-- script for delete device details -->
@@ -144,10 +146,75 @@
       console.log(i);
      let x= document.getElementById("devices");
      x.innerText = i;
+     await fetchDevices2();
+
     } catch (error) {
       console.error("Error fetching devices:", error);
     }
   }
+
+
+
+
+  async function fetchDevices2() {
+    try {
+      const response = await fetch("/discover/2");
+      const devices = await response.json();
+
+      const tableBody = document.getElementById("device-table-body");
+      tableBody.innerHTML = "";
+
+      let i = 0;
+      devices.forEach((device) => {
+        i++;
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${device.name}</td>
+          <td>${device.ids.toString()}</td>
+          <td><span class="badge badge-outline">online</span></td>
+          <td>${getCurrentDateTime()}</td>
+          <td>
+            update broker
+          </td>
+        `;
+
+        tableBody.appendChild(row);
+      });
+      console.log(i);
+     let x= document.getElementById("devices");
+     x.innerText = i;
+
+    } catch (error) {
+      console.error("Error fetching devices:", error);
+    }
+  }
+
+
+  function getCurrentDateTime() {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // Adding 1 to get the correct month (1-12)
+    const day = currentDate.getDate();
+    const hours = currentDate.getHours();
+    const minutes = currentDate.getMinutes();
+    const seconds = currentDate.getSeconds();
+    const milliseconds = currentDate.getMilliseconds();
+
+    // Formatting with zero-padding for single digits
+    const formattedDateTime = `${year}-${padZero(month)}-${padZero(day)} ${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}.${milliseconds}`;
+
+    return formattedDateTime;
+}
+
+// Function to pad single digit numbers with leading zeros
+function padZero(num) {
+    return num < 10 ? `0${num}` : num;
+}
+
+// Example usage:
+const currentDateTime = getCurrentDateTime();
+console.log(`Current Date and Time: ${currentDateTime}`);
 
   // Fetch devices when the page loads
   window.onload = fetchDevices;

@@ -104,10 +104,29 @@ app.get("/discover", async (req, res) => {
 // will discover the devices in home assistant api
 app.get("/discover/2", async (req, res) => {
   try {
+    const blockedDevices = [
+      "person.uxe",
+      "zone.home",
+      "conversation.home_assistant",
+      "sun.sun",
+      "sensor.sun_next_dawn",
+      "sensor.sun_next_dusk",
+      "sensor.sun_next_midnight",
+      "sensor.sun_next_noon",
+      "sensor.sun_next_rising",
+      "sensor.sun_next_setting",
+      "todo.shopping_list",
+      "update.hacs_update",
+      "update.node_red_companion_update",
+      "tts.google_en_com",
+      "automation.num1",
+      "weather.forecast_home",
+    ];
     const x = await discover();
     console.log("discovered:", x);
     const a = parseDevices(x);
-    res.send(a);
+    const filteredDevs = a.filter(device => !blockedDevices.includes(device.ids[0]));
+    res.send(filteredDevs);
   } catch (error) {
     console.error("Error in /discover route:", error);
     res.status(500).send("Internal Server Error");
