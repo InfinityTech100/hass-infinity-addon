@@ -5,6 +5,14 @@
       <span>Setting</span>
     </h1>
 
+    <label class="my-2">Hub Name</label>
+    <input
+      type="text"
+      id="hubname"
+      placeholder="Enter your Hub name"
+      class="input input-bordered w-full mt-1"
+    />
+
     <label class="my-2">Cloud Dashboard Gateway</label>
     <input
       type="text"
@@ -42,61 +50,70 @@
 </div>
 
 <script>
+  hname = document.getElementById("hubname");
   getway = document.getElementById("getway");
   broker = document.getElementById("broker");
   ebroker = document.getElementById("external-broker");
   token = document.getElementById("token");
 
   async function fetchConfig() {
-      try {
-        const response = await fetch('/config');
-        const config = await response.json();
-        console.log(config);
-
-        getway.value = config.getway || '';
-        broker.value = config.broker || '';
-        ebroker.value= config.external_broker || '';
-        token.value = config.token || '';
-      } catch (error) {
-        console.error('Failed to fetch config:', error);
-      }
+    try {
+      const response = await fetch("/config");
+      const config = await response.json();
+      console.log(config);
+      hname.value=config.hubname ||"";
+      getway.value = config.getway || "";
+      broker.value = config.broker || "";
+      ebroker.value = config.external_broker || "";
+      token.value = config.token || "";
+    } catch (error) {
+      console.error("Failed to fetch config:", error);
     }
+  }
 
-    saveButton.addEventListener('click', () => {
-      const newConfig = {
-        token: token.value,
-        broker: broker.value,
-        external_broker:ebroker.value,
-        getway: getway.value
-      };
+  saveButton.addEventListener("click", () => {
+    const newConfig = {
+      hubname:hname.value,
+      token: token.value,
+      broker: broker.value,
+      external_broker: ebroker.value,
+      getway: getway.value,
+    };
 
-      setCfg(newConfig.token, newConfig.broker, newConfig.external_broker,newConfig.getway);
-    });
+    setCfg(
+      newConfig.hubname,
+      newConfig.token,
+      newConfig.broker,
+      newConfig.external_broker,
+      newConfig.getway
+    );
+  });
 
-    function setCfg(token, broker,ebroker ,gateway) {
-      const config = {
-        "token": token,
-        "broker": broker,
-        "external_broker": ebroker,
-        "getway": gateway
-      };
+  function setCfg(hname,token, broker, ebroker, gateway) {
+    const config = {
+      hubname:hname,
+      token: token,
+      broker: broker,
+      external_broker: ebroker,
+      getway: gateway,
+    };
 
-      fetch('/config', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(config)
+    fetch("/config", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(config),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Configuration updated successfully:", data);
       })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Configuration updated successfully:', data);
-      })
-      .catch(error => {
-        console.error('Failed to update config:', error);
+      .catch((error) => {
+        console.error("Failed to update config:", error);
       });
-    }
+  }
 
-    // Fetch the config on page load
-    fetchConfig();
+  // Fetch the config on page load
+  fetchConfig();
 </script>

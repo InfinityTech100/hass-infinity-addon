@@ -16,5 +16,11 @@
     "tts.google_en_com",
     "automation.num1",
     "weather.forecast_home"
-  ] 
+  ] ,
+  "mapping":[
+    {
+        "name":"temperature",
+        "values":[""]
+    }
+  ]
 }

@@ -51,16 +51,8 @@ function parseDevices(x) {
 
   const newList = simplifiedList.map((item) => {
     const parts = item.entity_id.split(".")[1].split("_");
-    //   console.log(parts);
-    const lastElement = parts.pop(); // Remove the last element
-    let result = "";
-
-    // Rebuild the string excluding the last element if it matches device_class
-    parts.forEach((part, index) => {
-      result += (index > 0 ? "_" : "") + part;
-    });
-
-    // Check if the last element should be added back
+    const lastElement = parts.pop();
+    let result = parts.join("_");
     if (lastElement !== item.device_class) {
       result += (result ? "_" : "") + lastElement;
     }
@@ -71,26 +63,33 @@ function parseDevices(x) {
     };
   });
 
-  // Step 2: Group elements by the 'processed' field
   const grouped = newList.reduce((acc, item) => {
-    const { processed, entity_id } = item;
+    const { processed, entity_id, device_class } = item;
     if (!acc[processed]) {
-      acc[processed] = [];
+      acc[processed] = {
+        ids: [],
+        device_class: device_class,
+      };
     }
-    acc[processed].push(entity_id);
+    acc[processed].ids.push(entity_id);
     return acc;
   }, {});
 
-  // Step 3: Create the final merged list
-  const mergedList = Object.entries(grouped).map(([processed, ids]) => {
-    return {
-      ids: ids,
+  const mergedList = Object.entries(grouped).map(
+    ([processed, { ids, device_class }]) => ({
+      ids,
       name: processed,
-    };
-  });
+      device_class,
+    })
+  );
+
   return mergedList;
 }
 
 // console.log("**********************");
 // console.log(parseDevices(xp));
-module.exports=parseDevices;
+
+
+module.exports = {
+  parseDevices,
+};

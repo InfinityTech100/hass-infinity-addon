@@ -1,6 +1,7 @@
 {
+  "hubname": "hub0emui",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIzMTFhOWY3YmFjMzY0NzVkYTdkYzU1NzdjYjRhZjA4MCIsImlhdCI6MTcyMDQwMDgzMCwiZXhwIjoyMDM1NzYwODMwfQ.CAwpcH-z0C1cO0kfTMmDNsidDv8dQtWPyTT8Txu9IzI",
   "broker": "localhost:1883",
-  "external_broker": "hello",
+  "external_broker": "mqtt://broker.hivemq.com",
   "getway": "https://thingsboard.cloud/api/v1/<device_id>/telemetry"
 }

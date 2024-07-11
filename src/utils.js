@@ -9,10 +9,11 @@ const fs = require("fs");
 const axios = require("axios");
 
 // Function to set the configuration
-function setCfg(token, broker, ebroker,gateway) {
+function setCfg(hname,token, broker, ebroker,gateway) {
   try {
     const configFilePath = path.join(__dirname, "data", "config.json");
     const config = {
+      hubname:hname,
       token: token,
       broker: broker,
       external_broker: ebroker,
@@ -104,7 +105,7 @@ async function discover() {
       },
     });
 
-    console.log("Response:", response.data);
+    //console.log("Response:", response.data);
     return response.data; // Return the response data
   } catch (error) {
     console.error("Error:", error);
@@ -128,7 +129,7 @@ async function getState(device) {
     // console.log("Response:", response.data);
     return response.data; // Return the response data
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error:");
     return {}; // Return an empty object or handle the error accordingly
   }
 }
@@ -159,7 +160,7 @@ async function transformDevice(obj) {
 function generateDeviceUrl(device) {
   let baseurl = getCfg().getway;
   baseurl = baseurl.replace("<device_id>", device);
-  console.log(baseurl);
+  // console.log(baseurl);
   return baseurl;
 }
 
@@ -211,10 +212,10 @@ async function send2cloud(deviceUrl, data) {
       },
     });
 
-    console.log(
-      `Data sent successfully to ${deviceUrl}. Response:`,
-      response.data
-    );
+    // console.log(
+    //   `Data sent successfully to ${deviceUrl}. Response:`,
+    //   response.data
+    // );
     return response.data;
   } catch (error) {
     console.error(`Error sending data to ${deviceUrl}:`, error);

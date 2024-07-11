@@ -20,9 +20,10 @@ const {
   send2cloud,
   updateLastSeen,
 } = require("./utils");
-const parseDevices = require("./deviceProcessor");
+const { parseDevices } = require("./deviceProcessor");
 const bodyParser = require("body-parser");
 const { log } = require("console");
+const { publish2EBroker, generateDeviceData } = require("./mqtt.integration");
 
 const app = express();
 
@@ -55,6 +56,7 @@ app.get("/", (req, res) => {
 app.post("/config", (req, res) => {
   console.log("Request body in POST /config:", req.body);
   setCfg(
+    req.body.hubname,
     req.body.token,
     req.body.broker,
     req.body.external_broker,
@@ -111,6 +113,7 @@ app.get("/discover/2", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 // will get a device state from home assistant api
 app.get("/device/:id", async (req, res) => {
   try {
@@ -140,9 +143,9 @@ app.listen(PORT, () => {
  *    2- generate its url
  *    3- send to the cloud
  */
-function thread() {
+function thread1() {
   try {
-    console.log("updating devices on the cloud ....");
+    // console.log("updating devices on the cloud ....");
 
     let xa = getDevices();
     xa.forEach(async (device) => {
@@ -152,11 +155,50 @@ function thread() {
       await send2cloud(devUrl, data);
       // console.log(a);
     });
-    console.log("success");
+    // console.log("success");
   } catch (error) {
     console.log("invlid cloud id.....");
   }
 }
 
+async function thread2() {
+  try {
+    const blockedDevices = [
+      "person.uxe",
+      "zone.home",
+      "conversation.home_assistant",
+      "sun.sun",
+      "sensor.sun_next_dawn",
+      "sensor.sun_next_dusk",
+      "sensor.sun_next_midnight",
+      "sensor.sun_next_noon",
+      "sensor.sun_next_rising",
+      "sensor.sun_next_setting",
+      "todo.shopping_list",
+      "update.hacs_update",
+      "update.node_red_companion_update",
+      "tts.google_en_com",
+      "automation.num1",
+      "weather.forecast_home",
+    ];
+
+    let xa = await discover();
+    const devs = parseDevices(xa);
+
+    // Filter out blocked devices
+    const filteredDevs = devs.filter(device => !blockedDevices.includes(device.ids[0]));
+
+    // Process each device
+    for (const device of filteredDevs) {
+      const data = await generateDeviceData(device.ids, device.name);
+      publish2EBroker(device.name, data);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+
 // Set interval to run logHelloWorld function every 1000 ms (1 second)
-// setInterval(thread, 1000);
+setInterval(thread1, 1000); // for thingsboard
+setInterval(thread2, 1000); // for the mqtt broker
