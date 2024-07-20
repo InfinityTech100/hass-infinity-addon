@@ -1,3 +1,3 @@
 npm install
-npm build:css
+npm run build:css
 npm start
