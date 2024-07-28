@@ -219,5 +219,5 @@ async function thread2() {
 
 
 // Set interval to run logHelloWorld function every 1000 ms (1 second)
-setInterval(thread1, 1000); // for thingsboard
-setInterval(thread2, 1000); // for the mqtt broker
+setInterval(thread1, 30000); // for thingsboard
+setInterval(thread2, 30000); // for the mqtt broker
